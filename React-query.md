@@ -18,6 +18,7 @@ return <>{data.map((value, index) => <div>{value.title}</div>)}<>;
 1. async 함수 만들기
 2. useMutation 쓰기
 3. useMutation 안에서 함수 만들기
+4. mutate() 함수 사용하기
 
 const [ successTodo, setSuccessTodo]= useSatte(false)
 
