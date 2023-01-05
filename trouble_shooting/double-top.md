@@ -1,0 +1,75 @@
+# 더블탭 방지와 관련해서
+
+- QA를 하다보면, 정말 생각지도 못한 케이스까지 마주하게 되어서 당황할 때가 많다. 최근들어 더블탭 문제에 많이 봉착하게 되었는데, 근본적인 것 부터 해결되면 정말 좋겠지만 그 근본을 해결하는 것이 쉽지 않아서, 깨진 독에 테이프를 붙이는 식으로 해결은 하고 있다.
+
+## 문제 상황
+
+1. 2 depth 화면에서 뒤로가기를 연속 탭을 하면, 뒤로가기 이벤트가 두 번 발생하는 상황
+2. 상품의 아이템 카드를 연속 탭을 했을 때 탭을 한 횟수만큼 상세화면이 켜지는 상황
+3. 구매하기 버튼을 연속 탭을 하면 api 요청이 두 번 가는 상황
+
+## 생각하고 적용해봤던 방법들
+
+- 제일 쉬운 방법은 setTimeout 으로 더블 탭을 방지하는 것이었겠지만, 근본적인 해결방법이 아닐 뿐더러 setTimeout을 적용하기 위해 굳이 관련한 상태를 또 만들어야하는게 맞을까라는 생각이 들었다.
+- 해당 페이지를 벗어나면 event 를 취소시키는 방법이 없을까? 라고 생각을 해서 이벤트 관련해서 계속 서치를 해봤는데 이 작은 문제로 너무 시간을 많이 잡아먹고 있어서 우선은 스킵
+- 뒤로가기 이벤트를 `navigation.goback()` 으로 보내고 있었는데, `.pop()` 메서드를 사용하면 어떨까 라는 생각으로 테스트를 해봄
+- `debounce` 를 먹이면 쉽겠지만 더블탭이 아닌 연타는 이겨낼 수 없을 것 같아서 최후의 방법으로 고려를 해봄
+
+## 결과
+
+### `.pop()` 적용
+
+```typescript
+const goBack = () => {
+  if (navigation.canGoBack()) {
+    (
+      navigation as typeof navigation & {
+        pop: () => void;
+      }
+    ).pop();
+  } else {
+    navigate(EnumScreenNames.StackHome, {
+      screen: EnumScreenNames.ScreenHome,
+      initial: true,
+    });
+  }
+};
+```
+
+- 해당 스크린에서 이벤트가 일어났기 때문에 이전 페이지로 이동한 상태에서 잔여 이번트가 발생이 하더라도 뒤로가기를 못할 것이라고 생각해 수정했던 코드였다. 물론 해당 코드가 실행이 안되는게 더 좋기 때문에 `.conGoBack()` 으로 한 단계 더 막아봤다.
+- 결과적으로는 더블탭이 막혔다. 하지만 찜찜한 상황이 벌어졌다. warning 문구가 콘솔에 찍히게 된 것
+
+```
+// warning
+The action 'POP' with payload {"count":1} was not handled by any navigator.
+Is there any screen to go back to?
+This is a development-only warning and won't be shown in production.
+```
+
+- 단순한 경고 문구라 무시할까 싶다가도 이런 것 자체가 나오는게 영 찜찜해서 경고 문구에 대해서 서칭을 해봤는데, 외국인 선생님들이 그냥 `debounce` 먹이라고 많이들 올려뒀던..
+
+### `debounce` 적용
+
+- 최후의 방법이라 생각하고 킵해뒀던 `debounce`. 하지만 근본적인 해결책은 아니라는 생각이 드는건 여전함
+- `event` 와 `navigator` 관련해서 조금 더 공부해보면 답이 나오지 않을까.. 싶다. 일단 이렇게 마무리를 하고 QA 지속하기로..!
+
+```typescript
+import { debounce } from "lodash";
+
+const goBack = debounce(() => {
+  if (navigation.canGoBack()) {
+    navigation.goBack();
+  } else {
+    navigate(EnumScreenNames.StackHome, {
+      screen: EnumScreenNames.ScreenHome,
+      initial: true,
+    });
+  }
+}, 300);
+```
+
+### debounce
+
+- 이벤트 핸들러가 많은 연산(예 : 무거운 계산 및 기타 DOM 조작)을 수행(이벤트 핸들러의 과도한 횟수가 발생하는 것)하는 경우 에 대해 제약을 걸어 제어할 수 있는 수준으로 이벤트를 발생(그 핸들러를 더 적게 실행하면 빠져 나갈 수 있음)시키는 것을 목표 로 하는 기술
+- 이벤트를 그룹화하여 특정시간이 지난 후 하나의 이벤트만 발생하도록 하는 기술
+- 연이어 호출되는 함수들 중 마지막 함수(또는 제일 처음)만 호출하도록 하는 것
