@@ -75,6 +75,7 @@ times(a => console.log(a +10), 3); // 10, 11, 12;
 - addMaker
 
 ```javascript
+// a 는 계속 기억이 되고 있음
 const addMaker = (a) => (b) => a + b;
 const add10 = addMaker(10);
 console.log(add10); // b => a + b;
