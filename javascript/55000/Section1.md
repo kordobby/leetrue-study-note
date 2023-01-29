@@ -263,3 +263,86 @@ if2.next(); // { value: 3, done: false }
 
 - 그래서 iterable 객체가 뭘까
 - next() 메서드의 직접적인 역할은 뭘까
+
+## 사용자 정의 이터러블을 통해 알아보기
+
+```javascript
+const iterable = {
+  [Symbol.iterator]() {
+    let i = 3;
+    return {
+      next() {
+        return i == 0 ? { done: true } : { value: i--, done: false };
+      },
+    };
+  },
+};
+
+let iterator = iterable[Symbol.iterator]();
+console.log(iterator.next()); // { value: 3, done: false }
+console.log(iterator.next()); // { value: 2, done: false }
+console.log(iterator.next()); // { value: 1, done: false }
+console.log(iterator.next()); // { done: true }
+
+for (const a of iterable) console.log(a);
+// 3
+// 2
+// 1
+
+const arr2 = [1, 2, 3];
+for (const a of arr2) console.log(a);
+// 1
+// 2
+// 3
+
+/* iterator 가 자기 자신을 반환하는 Symbol.iterator 를 가지고 있을 때
+well-formed iterator, well-formed iterable 이라고 함 */
+const iter2 = arr2[Symbol.iterator]();
+console.log(iter2[Symbol.iterator]()); // function
+for (const a of iter2) console.log(a);
+// 1
+// 2
+// 3
+```
+
+```javascript
+console.log(document.querySelectorAll('*'));
+for ( const a of document.querySelectorAll('*') console.log(a));
+const all = document.querySelectorAll('*');
+console.log(all) // NodeList [html, head, script, body, ...], __proto__ : NodeList
+console.log(all[Symbol.iterator]); // function
+console.log(all[Symbol.iterator]()); // Array Iterator {}
+let iter3 = all[Symbol.iterator]();
+console.log(iter3.next()); // { value: html, done: false }
+console.log(iter3.next()); // { value: head, done: false }
+console.log(iter3.next()); // { value: script, done: false }
+```
+
+## 전개 연산자
+
+```javascript
+const a = [1, 2];
+console.log(...a); // 1 2
+console.log([...a, ...[3, 4]]); // [1, 2, 3, 4]
+
+a[Symbol.iterator] = null;
+console.log([...a, ...[3, 4]]); // TypeError : a is not iterable
+```
+
+```javascript
+/* Array */
+const arr = [1, 2, 3];
+/* Set */
+const set = new Set([1, 2, 3]);
+/* Map */
+const map = new Map(["a", 1], ["b", 2], ["c", 3]);
+
+console.log([...arr, ...set, ...map]);
+// [1, 2, 3, 1, 2, 3, ["a", 1], ["b", 2], ["c", 3]];
+
+console.log([...arr, ...set, ...map.values()]);
+// [1, 2, 3, 1, 2, 3, 1, 2, 3 ];
+
+console.log([...arr, ...set, ...map.keys()]);
+// [1, 2, 3, 1, 2, 3, "a", "b", "c" ];
+```
