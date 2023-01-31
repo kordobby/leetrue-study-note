@@ -22,6 +22,37 @@ generator === generator[Symbol.iterator]();
   - 이를 호출하는 함수 : Caller
   - Caller 는 Callee 의 yield 부분에서 다음 statement 로 진행을 할 지 여부를 제어
   - 이는 next 로 인해 재개될 수 있음
+- next를 일일이 호출하지 않고, programmitically하게 호출하게 하려면, 다음과 같이 재귀 호출을 하면 됨
+- 예제 코드는 홀수는 그대로 출력하고 짝수에는 1을 더해 출력하는 Runner
+
+```javascript
+function* sampleGFunction() {
+  console.log(yield 10);
+  console.log(yield 5);
+  console.log(yield 0);
+}
+
+function run(gen) {
+  const it = gen();
+
+  (function iterate({ value, done }) {
+    if (done) {
+      return value;
+    }
+
+    if (value % 2 === 0) {
+      iterate(it.next(value + 1));
+    } else {
+      iterate(it.next(value));
+    }
+  })(it.next());
+}
+
+run(sampleGFunction);
+// 11
+// 5
+// 1
+```
 
 ## 제너레이터 함수에서의 return
 
