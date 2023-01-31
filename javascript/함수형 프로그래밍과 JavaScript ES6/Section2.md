@@ -116,8 +116,6 @@ iter4.next(); // { value: 3, done: false }
 iter4.next(); // { value: 4, done: false }
 iter4.next(); // { value: undefined, done: true }
 
-
-
 for (const a of odds(40)) console.log(a);
 // 1
 // 3
@@ -126,4 +124,20 @@ for (const a of odds(40)) console.log(a);
 // 39
 ```
 
+- 연습을 다양하게 해보기!
+
 ## for of, 전개 연산자, 구조 분해, 나머지 연산자
+
+```javascript
+console.log(...odds(10)); // 1 3 5 7 9
+console.log([...odds(10), ...odds(20)]); // [1, 3, 5, 7, ..., 17, 19]
+
+const [head, ...tail] = odds(5);
+console.log(head); // 1
+console.log(tail); // [3, 5]
+
+const [a, b, ...rest] = odds(10);
+console.log(a); // 1
+console.log(b); // 3
+console.log(rest); // [5, 7, 9]
+```
