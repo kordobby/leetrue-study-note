@@ -56,6 +56,19 @@ run(sampleGFunction);
 
 ## 제너레이터 함수에서의 return
 
+- return은 수행되고 있는 이터레이터를 종료시킴
+- return 뒤에 오는 값은 IteratorResult 객체의 value 프로퍼티에 할당
+- done 프로퍼티는 true가 할당
+
+```javascript
+function* sampleGFunction() {
+  return 42;
+}
+
+const generator = sampleGFunction();
+console.log(generator.next()); // { value: 42, done: true }
+```
+
 ## 제너레이터 종료하기
 
 ## 다른 generator function 에 컨텍스트 위임하기
