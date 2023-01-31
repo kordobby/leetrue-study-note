@@ -40,7 +40,7 @@ for (const a of gen()) console.log(a);
 ```
 
 ```javascript
-function gen() {
+function *gen() {
     yeild 1;
     if (false) yeild 2;
     yeild 3;
@@ -54,3 +54,76 @@ for (const a of gen()) console.log(a);
 
 - javascript 에서는 어떠한 값이든 이터러블이면 순회할 수 있음
 - 제너레이터는 하나의 문장을 값으로 만들 수 있고 이 문장을 통해 순회할 수 있는 값을 만들 수 있음
+
+## odds
+
+```javascript
+function* odds(l) {
+  yield 1;
+  yield 3;
+  yield 5;
+}
+
+let iter2 = odds(10);
+console.log(iter2.next());
+console.log(iter2.next());
+console.log(iter2.next());
+console.log(iter2.next());
+console.log(iter2.next());
+```
+
+```javascript
+function *odds(l) {
+  for (let i = 0;, i < l; i++) {
+    if (i % 2) yield i;
+  }
+}
+
+let iter2 = odds(10);
+console.log(iter2.next()); // { value: 1, done: false }
+console.log(iter2.next()); // { value: 3, done: false }
+console.log(iter2.next()); // { value: 5, done: false }
+console.log(iter2.next()); // { value: 7, done: false }
+console.log(iter2.next()); // { value: 9, done: false }
+console.log(iter2.next()); // { value: undefined, done: true }
+console.log(iter2.next()); // { value: undefined, done: true }
+console.log(iter2.next()); // { value: undefined, done: true }
+```
+
+```javascript
+function *infinity(i = 0) {
+  while (true) yield i++;
+}
+
+function *limit(l, iter) {
+    fonr (const a of iter) {
+        yield a;
+        if (a == l) return;
+    }
+}
+
+function *odds(l) {
+    for (const a of infinity(1)) {
+        if (i % 2) yield a;
+        if (a == l) return;
+    }
+}
+
+let iter4 = limit(4, [1, 2, 3, 4, 5, 6]);
+iter4.next(); // { value: 1, done: false }
+iter4.next(); // { value: 2, done: false }
+iter4.next(); // { value: 3, done: false }
+iter4.next(); // { value: 4, done: false }
+iter4.next(); // { value: undefined, done: true }
+
+
+
+for (const a of odds(40)) console.log(a);
+// 1
+// 3
+// 5
+// ...
+// 39
+```
+
+## for of, 전개 연산자, 구조 분해, 나머지 연산자
