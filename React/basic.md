@@ -68,4 +68,59 @@ const element = <h1>Hello, {formatName(user)}!</h1>;
 ReactDOM.render(element, document.getElementById("root"));
 ```
 
-###
+### React Element
+
+- React의 Element는 React 앱을 구성하는 블록
+- 엘리먼트는 화면을 구성하는 요소이며, 불변 값
+- 주로 직접 사용되지는 않고, React Component에 의해서 만들어짐
+
+### React Component
+
+- 페이지에 렌더링할 React Element는 재사용가능한 작은 코드 조각
+
+### React Props
+
+- 부모 컴포넌트로부터 자식 컴포넌트에게 전달된 데이터
+- props는 읽기전용 데이터이기 때문에 변경하면 안됨
+- 변경해야하는 값은 state를 사용해야함
+
+### React Props > children
+
+- props.children은 컴포넌트의 여는 태그와 닫는 태그 사이의 내용을 말함
+
+```javascript
+<Welcome>Hello world!</Welcome>;
+
+function Welcome(props) {
+  return <p>{props.children}</p>;
+}
+
+class Welcome extends React.Component {
+  render() {
+    return <p>{this.props.children}</p>;
+  }
+}
+```
+
+### React State
+
+- 컴포넌트에 관한 일부 데이터가 시간에 따라 변경될때, state가 사용됨
+- 하나의 state는 하나의 컴포넌트에서 관리되어야함
+- 서로 다른 두 컴포넌트의 state를 동기화하려고 하면 안됨
+- 두 공통 상태를 공통 조상으로 끌어올리고, 해당 데이터를 두 컴포넌트에 props으로 전달해야함
+
+### React Controlled Component
+
+- 리액트에 의해 입력값이 제어되는 Form을 Controlled Component라 칭함
+- 사용자가 Controlled Component에 데이터를 입력하면, 이벤트 핸들러가 호출되고, 코드가 입력값의 유효성을 체크하는 방식으로 동작
+
+### React Key
+
+- Element 배열을 만들 때, 각 Element를 식별하기 위해서는 Key를 사용
+- 특정 Element를 삭제,추가 작업 같은 제어를 할 수 있음
+
+### Reconciliation
+
+- React Component의 state 혹은 props가 변경되면, React는 새로 반환된 Component를 이전에 렌더링된 Component와 대조하여 실제 DOM을 업데이트해야하는지를 결정
+- 두 Component가 동일하지 않다면, React는 Dom을 다시 렌더링
+- 이 작업을 Reconciliation(재조정)이라 말함
