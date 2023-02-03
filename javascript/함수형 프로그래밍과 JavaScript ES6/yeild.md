@@ -282,6 +282,36 @@ function* generator() {
 
 ## iterable 한 generator
 
+- 제너레이터는 이터러블함
+- for..of 반복문을 통해 제너레이터를 순회할 수 있으며, ... 연산자를 사용할 수 있음
+
+```javascript
+function* generateName() {
+  yield "W";
+  yield "O";
+  yield "N";
+  yield "I";
+  yield "S";
+  yield "M";
+}
+
+// for..of
+const genForForOf = generateName();
+for (let i of genForForOf) {
+  console.log(i);
+}
+// W
+// O
+// N
+// I
+// S
+// M
+
+// ...
+const genForSpread = generateName();
+console.log([...genForSpread]); // ['W', 'O', 'N', 'I', 'S', 'M']
+```
+
 ## yeild
 
 - `yeild` operator is used to pause and resume a generator function.
