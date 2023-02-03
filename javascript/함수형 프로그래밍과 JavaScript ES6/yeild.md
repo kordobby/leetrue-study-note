@@ -211,6 +211,54 @@ console.log(withThrowWithYield.next());
 
 - `catch`에서 `yield`를 사용하게 되면, `next`를 n 번 더 사용할 때까지 이터레이터는 끝나지 않음
 
+### `yield*`
+
+- `yield` 에 `*` 를 붙여 사용하게 되면, `yeild*` 와 함께 표현된 이터러블 객체를 순회하게 됨
+
+```javascript
+function* iterableYield() {
+  const a = 1;
+  yield a;
+  yield* [1, 2, 3].map((el) => el * 10 ** a);
+
+  const b = 2;
+  yield b;
+  yield* [1, 2, 3].map((el) => el * 10 ** b);
+
+  const c = 3;
+  yield c;
+  yield* [1, 2, 3].map((el) => el * 10 ** c);
+}
+
+function run(gen) {
+  const it = gen();
+
+  (function iterate({ value, done }) {
+    console.log({ value, done });
+    if (done) {
+      return value;
+    }
+
+    iterate(it.next(value));
+  })(it.next());
+}
+
+run(iterableYield);
+// { value: 1, done: false }
+// { value: 10, done: false }
+// { value: 20, done: false }
+// { value: 30, done: false }
+// { value: 2, done: false }
+// { value: 100, done: false }
+// { value: 200, done: false }
+// { value: 300, done: false }
+// { value: 3, done: false }
+// { value: 1000, done: false }
+// { value: 2000, done: false }
+// { value: 3000, done: false }
+// { value: undefined, done: true }
+```
+
 ## 다른 generator function 에 컨텍스트 위임하기
 
 ## iterable 한 generator
