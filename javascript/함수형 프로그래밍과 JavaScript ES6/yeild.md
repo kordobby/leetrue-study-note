@@ -80,6 +80,42 @@ console.log(generator.next()); // { value: 42, done: true }
 
 ## 제너레이터 종료하기
 
+- 제너레이터에는 `next` 외에도 `throw`, `return` 등의 메서드가 있는데, 이 `return` 과 `throw` 를 통해 제너레이터를 종료할 수 있음
+- 둘 간에 차이는 있음
+
+### return
+
+```javascript
+function* pokemon() {
+  console.log("[PIKACHU]");
+  let i = 0;
+
+  try {
+    while (true) {
+      yeild i++;
+    }
+  } catch(e) {
+    console.log('[ERROR]', e);
+  }
+}
+
+const withReturn = pokemon();
+console.log(withReturn.next());
+console.log(withReturn.next());
+console.log(withReturn.next());
+console.log(withReturn.next());
+console.log(withReturn.return(333));
+
+// [PIKACHU]
+// { value: 0, done: false}
+// { value: 1, done: false}
+// { value: 2, done: false}
+// { value: 3, done: false}
+// { value: 333, done: true}
+```
+
+- `return` 이 호출되고 나면, `value` 에는 `return` 의 인자가 할당되고, `done`은 `true`가 됨
+
 ## 다른 generator function 에 컨텍스트 위임하기
 
 ## iterable 한 generator
