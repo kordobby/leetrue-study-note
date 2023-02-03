@@ -261,6 +261,25 @@ run(iterableYield);
 
 ## 다른 generator function 에 컨텍스트 위임하기
 
+- 제너레이터는 앞서 살펴본 `yeild*` 를 통해 다른 제너레이터 함수를 실행할 수 있음
+- `innerGenerator` 를 호출하면 객체가 반환되지만, 실제로 `innerGenerator`가 실행되지는 않음
+
+```javascript
+function* innerGenerator() {
+  yield* ["a", "b", "c"];
+}
+
+function* generator() {
+  yield* [1, 2, 3];
+  const innerGen = innerGenerator(); // Did nothing
+  console.log(innerGen);
+  yield* innerGenerator();
+}
+
+[...generator()];
+// [1, 2, 3, 'a', 'b', 'c']
+```
+
 ## iterable 한 generator
 
 ## yeild
