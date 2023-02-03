@@ -144,6 +144,38 @@ console.log(withReturnWithFinally.next()); // { value: 4, done: false }
 console.log(withReturnWithFinally.next()); // { value: 6, done: true }
 ```
 
+### throw
+
+```javascript
+function* increment() {
+  console.log("[ENTERED]");
+  let i = 0;
+
+  try {
+    while (true) {
+      yield i++;
+    }
+  } catch (e) {
+    console.log("[ERROR]", e);
+  }
+}
+
+const withThrow = increment();
+
+console.log(withThrow.next());
+console.log(withThrow.next());
+console.log(withThrow.next());
+console.log(withThrow.next());
+console.log(withThrow.throw(-1));
+
+// [ENTERED]
+// { value: 0, done: false }
+// { value: 1, done: false }
+// { value: 2, done: false }
+// { value: 3, done: false }
+// { value: undefined, done: true }
+```
+
 ## 다른 generator function 에 컨텍스트 위임하기
 
 ## iterable 한 generator
