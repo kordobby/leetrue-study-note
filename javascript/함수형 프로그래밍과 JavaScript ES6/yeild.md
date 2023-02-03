@@ -116,6 +116,34 @@ console.log(withReturn.return(333));
 
 - `return` 이 호출되고 나면, `value` 에는 `return` 의 인자가 할당되고, `done`은 `true`가 됨
 
+### return with try / finally
+
+- `return` 메서드가 호출되었을 때 제너레이터 함수의 코드가 `try / finally` 안에 있으면, 시퀀스가 종료되지 않음
+- `return` 이후 `finally` 블록의 `yeild` 표현식이 실행되며, 시퀀스는 결국 `return` 에 전달된 값으로 종료됨
+
+```javascript
+function* oneToX() {
+  yield 1;
+
+  try {
+    yield 2;
+  } finally {
+    yield 3;
+    yield 4;
+  }
+
+  yield 5;
+}
+
+var withReturnWithFinally = oneToX();
+
+console.log(withReturnWithFinally.next()); // { value: 1, done: false }
+console.log(withReturnWithFinally.next()); // { value: 2, done: false }
+console.log(withReturnWithFinally.return(6)); // { value: 3, done: false }
+console.log(withReturnWithFinally.next()); // { value: 4, done: false }
+console.log(withReturnWithFinally.next()); // { value: 6, done: true }
+```
+
 ## 다른 generator function 에 컨텍스트 위임하기
 
 ## iterable 한 generator
