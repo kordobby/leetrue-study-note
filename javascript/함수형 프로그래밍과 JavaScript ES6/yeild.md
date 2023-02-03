@@ -1,6 +1,15 @@
 ## generator function
 
+- 사용자의 요구에 따라 다른 시간 간격으로 여러 값을 반환할 수 있으며, 내부 상태를 관리할 수 있는 함수
+- `function* generatorFunction() {/* ... */}` 와 같이 사용
+- 단 한 번의 실행으로 함수의 끝까지 실행이 완료되는 일반 함수와 달리,
+  - 제너레이터 함수는 사용자의 요구에 따라 (`yeild` 와 `next` 를 통해) 일시적으로 정지될 수도 있고, 다시 시작될 수도 있음
+  - 제너레이터 함수의 반환으로는 제너레이터가 반환됨
+
 ## generator
+
+- 제너레이터 함수의 반환으로 iterable 프로토콜과 iterator 프로토콜을 따르는 객체
+- 제너레이터 이터러블에서 반환하는 이터레이터는 자기 자신임
 
 ```javascript
 function* generatorFunction() {
