@@ -176,6 +176,41 @@ console.log(withThrow.throw(-1));
 // { value: undefined, done: true }
 ```
 
+### throw with yield
+
+```javascript
+function* decrement() {
+  console.log("[ENTERED]");
+  let i = 0;
+
+  try {
+    while (true) {
+      yield i--;
+    }
+  } catch (e) {
+    yield e;
+  }
+}
+const withThrowWithYield = decrement();
+
+console.log(withThrowWithYield.next());
+console.log(withThrowWithYield.next());
+console.log(withThrowWithYield.next());
+console.log(withThrowWithYield.next());
+console.log(withThrowWithYield.throw(Infinity));
+console.log(withThrowWithYield.next());
+
+// [ENTERED]
+// { value: 0, done: false }
+// { value: -1, done: false }
+// { value: -2, done: false }
+// { value: -3, done: false }
+// { value: Infinity, done: false }
+// { value: undefined, done: true }
+```
+
+- `catch`에서 `yield`를 사용하게 되면, `next`를 n 번 더 사용할 때까지 이터레이터는 끝나지 않음
+
 ## 다른 generator function 에 컨텍스트 위임하기
 
 ## iterable 한 generator
