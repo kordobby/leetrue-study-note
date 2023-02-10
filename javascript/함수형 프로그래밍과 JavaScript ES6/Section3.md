@@ -52,3 +52,11 @@ const map = (f, iter) => {
 
 map((p) => p.name, pokemon);
 ```
+
+## iterable protocol 을 따르는 map 의 다형성
+
+```javascript
+console.log([1, 2, 3].map((a) => a + 1)); // [2, 3, 4]
+
+console.log(document.querySelectorAll("*").map((el) => el.nodeName)); // undefined
+```

@@ -1,0 +1,16 @@
+{"sellerGetPurchase": 
+{"__typename": "PurchaseEntity", 
+"acceptedAt": 1675818427000, 
+"buyer": 
+{
+"__typename": "UserEntity", 
+"id": "URK4HM52ARNB", 
+"name": null, 
+"nickname": "피카츄", 
+"settlementMethods": [Array]}, 
+"buyerNegotiation": 
+{"__typename": "NegotiationColumn", 
+"count": 0, 
+"negotiatedAt": 1675818416000, 
+"price": [Object]}, 
+"buyerNegotiationCommissionPrice": {"__typename": "PriceColumn", "amount": 55.55, "currencyType": "KRW"}, "buyerSendbirdId": "3NFKM7J6ALB88EJ7", "closedAt": null, "createdAt": 1675818415881, "deliveries": [], "id": "PUKVGHAIKIFW", "inspection": {"__typename": "InspectionEntity", "createdAt": 1675818427817, "isFake": null, "status": "PENDING", "updatedAt": 1675818427817}, "inspectionPrice": {"__typename": "PriceColumn", "amount": 100, "currencyType": "KRW"}, "isNegotiable": false, "item": {"__typename": "ItemEntity", "condition": "SS", "createdAt": 1675321174035, "description": "", "designers": [Array], "extraImages": [Array], "id": "IT2SGKS5I3V5", "isConsignment": false, "isNegotiable": false, "name": "ㅎㅎㅎ", "price": 5555, "product": null, "returningAddress": [Object], "returningAddressName": null, "seller": [Object], "settlementMethod": null, "status": "PAID", "thumbnailImage": [Object], "updatedAt": 1675819124000, "whenToGetIt": 1675177200000, "whereToGetIt": ""}, "needInspection": true, "paidAt": 1675818428000, "payAmount": 5555, "payments": [[Object]], "penalty": null, "sellerNegotiation": {"__typename": "NegotiationColumn", "count": 1, "negotiatedAt": 1675818416000, "price": [Object]}, "sellerNegotiationCommissionPrice": {"__typename": "PriceColumn", "amount": 0, "currencyType": "KRW"}, "sellerSendbirdId": "NFR95V2QO6TOHJWE", "shippingAddress": {"__typename": "AddressColumn", "detail": "예일빌딩 1층, CHIC LAB", "englishAddress": "서울 서초구 양재천로19길 21", "jibunAddress": "서울특별시 양재동 124-5", "phoneNumber": "02-2088-2839", "postalCode": "06753", "roadAddress": "서울 서초구 양재천로19길 21"}, "shippingAddressName": "CHIC LAB", "status": "PAID", "updatedAt": 1675818427000}}
