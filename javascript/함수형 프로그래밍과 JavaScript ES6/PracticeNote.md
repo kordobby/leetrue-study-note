@@ -33,3 +33,57 @@ const addYoon = (a) => (b) => a + "YOON" + b;
 const addLee = addYoon("LEE");
 console.log(addLee("DOBBY")); // LEEDOBBY
 ```
+
+```javascript
+const list = [1, 2, 3];
+
+for (let i = 0; i < list.length; i++) {
+  console.log(list[i]);
+}
+
+const string = "abc";
+for (let i = 0; i < string.length; i++) {
+  console.log(string[i]);
+}
+console.log(string[0]);
+
+for (const a of list) {
+  console.log(a);
+}
+
+for (const a of string) {
+  console.log(a);
+}
+
+const hogwarts = ["Harry", "Ron", "Dobby"];
+let array = [];
+// for (const a of hogwarts) {
+//   array.push(a);
+// }
+
+/* ================== */
+for (const a of hogwarts) {
+  if (a === "Dobby") {
+    array.push(a);
+  } else {
+    return;
+  }
+}
+// 여기까지 내려오지도 못하는구나
+console.log("<x)33333)<");
+console.log(array);
+/* ================== */
+
+/* ================== */
+for (const a of hogwarts) {
+  if (a === "Dobby") {
+    array.push(a);
+  } else {
+    console.log(a); // Harry Ron
+  }
+}
+// 여기까지 내려오지도 못하는구나
+console.log("<x)33333)<");
+console.log(array); // [ 'Dobby' ]
+/* ================== */
+```
