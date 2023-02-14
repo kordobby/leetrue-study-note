@@ -126,3 +126,15 @@ Map(5) {
 }
 */
 ```
+
+```javascript
+let setPokemon = new Set().add("이상해씨").add("꼬부기");
+setPokemon.add("지우");
+
+console.log(setPokemon); // Set(3) { '이상해씨', '꼬부기', '지우' }
+console.log(setPokemon.size); // 3
+console.log(setPokemon.has("파이리")); // false
+
+setPokemon.delete("지우");
+console.log(setPokemon.has("지우")); // false
+```
