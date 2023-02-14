@@ -87,3 +87,22 @@ console.log("<x)33333)<");
 console.log(array); // [ 'Dobby' ]
 /* ================== */
 ```
+
+```javascript
+const array = [1, 2, 3];
+for (const a of array) console.log(a);
+
+const set = new Set([1, 2, 3]);
+for (const a of set) console.log(a); // 1 2 3
+console.log(set); // Set(3) { 1, 2, 3 }
+
+/* =============================================== */
+const map = new Map([
+  ["a", 1],
+  ["b", 2],
+  ["c", 3],
+]);
+for (const a of map) console.log(a); // TypeError: Iterator value a is not an entry object
+console.log(map); // TypeError: Iterator value a is not an entry object
+/* =============================================== */
+```
