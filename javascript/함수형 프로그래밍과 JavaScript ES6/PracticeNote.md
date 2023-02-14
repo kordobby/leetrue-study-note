@@ -97,12 +97,32 @@ for (const a of set) console.log(a); // 1 2 3
 console.log(set); // Set(3) { 1, 2, 3 }
 
 /* =============================================== */
-const map = new Map([
-  ["a", 1],
-  ["b", 2],
-  ["c", 3],
-]);
+const map = new Map(["a", 1], ["b", 2], ["c", 3]);
 for (const a of map) console.log(a); // TypeError: Iterator value a is not an entry object
 console.log(map); // TypeError: Iterator value a is not an entry object
 /* =============================================== */
+```
+
+```javascript
+let startingPokemonMap = new Map([
+  ["01", "이상해씨"],
+  ["02", "꼬부기"],
+  ["03", "파이리"],
+  ["04", "피카츄"],
+]);
+
+for (const a of startingPokemonMap) console.log(a);
+console.log(startingPokemonMap); // Map(4) { '01' => '이상해씨', '02' => '꼬부기', '03' => '파이리', '04' => '피카츄' }
+
+startingPokemonMap.set("05", "토게피");
+console.log(startingPokemonMap);
+/*
+Map(5) {
+  '01' => '이상해씨',
+  '02' => '꼬부기',
+  '03' => '파이리',
+  '04' => '피카츄',
+  '05' => '토게피'
+}
+*/
 ```
